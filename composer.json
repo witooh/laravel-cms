@@ -1,0 +1,25 @@
+{
+    "name": "witooh/cms",
+    "description": "",
+    "authors": [
+        {
+            "name": "witooh",
+            "email": "witoo@outlook.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/support": "4.0.x",
+        "witooh/validators": "dev-master",
+        "witooh/grid-dataprovider": "dev-master"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations"
+        ],
+        "psr-0": {
+            "Witooh\\Cms": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
