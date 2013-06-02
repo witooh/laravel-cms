@@ -51,7 +51,7 @@ class CmsServiceProvider extends ServiceProvider
                 $validators->add('cms.category.create', new CreateCategoryValidator());
                 $validators->add('cms.category.update', new UpdateCategoryValidator());
 
-                return new CategoryManager($app['ICategoryRepository']);
+                return new CategoryManager($app['Witooh\Cms\Repositories\ICategoryRepository']);
             }
         );
 
@@ -62,7 +62,7 @@ class CmsServiceProvider extends ServiceProvider
                 $validators->add('cms.content.create', new CreateContentValidator());
                 $validators->add('cms.content.update', new UpdateContentValidator());
 
-                return new ContentManager($app['IContentRepository']);
+                return new ContentManager($app['Witooh\Cms\Repositories\IContentRepository']);
             }
         );
     }

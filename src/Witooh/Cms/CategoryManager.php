@@ -55,6 +55,6 @@ class CategoryManager
 
     public function listen($event, $handler)
     {
-        $this->handlers[$event] = $handler;
+        $this->handlers[$event][] = $handler;
     }
 }
