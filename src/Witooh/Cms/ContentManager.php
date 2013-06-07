@@ -2,46 +2,40 @@
 
 namespace Witooh\Cms;
 
-use Witooh\Validators\IValidator;
 use Witooh\Cms\Repositories\IContentRepository;
 use Witooh\Cms\Models\Content;
+use Event;
+use ResMsg;
 
 class ContentManager
 {
 
     private $contentRepository;
-    private $handlers = array();
 
     public function __construct(IContentRepository $contentRepository)
     {
         $this->contentRepository = $contentRepository;
     }
 
-    private function fire($event, $data)
-    {
-        if (isset($this->handlers[$event])) {
-            foreach ($this->handlers[$event] as $handler) {
-                $handler($data);
-            }
-        }
-    }
-
     public function create(Content $content)
     {
-        $this->fire('before.create', $content);
-        $this->fire('after.create', $content);
+        Event::fire('cms.content.before.create', array($content));
+        $result = $this->contentRepository->create($content);
+        Event::fire('cms.content.after.create', array($content));
+
+        return $result;
     }
 
-    public function update(Content $content)
+    public function update(Content $content, $userID)
     {
-        $this->fire('before.update', $content);
-        $this->fire('after.update', $content);
+        Event::fire('cms.content.before.update', array($content));
+        Event::fire('cms.content.after.update', array($content));
     }
 
     public function destroy($id)
     {
-        $this->fire('before.update', $id);
-        $this->fire('after.update', $id);
+        Event::fire('cms.content.before.destroy', array($id));
+        Event::fire('cms.content.after.destroy', array($id));
     }
 
     public function getContents($name)
@@ -52,10 +46,5 @@ class ContentManager
     public function getContent($id)
     {
 
-    }
-
-    public function listen($event, $handler)
-    {
-        $this->handlers[$event][] = $handler;
     }
 }

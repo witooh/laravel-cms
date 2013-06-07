@@ -5,6 +5,8 @@ use Witooh\Cms\Validators\CreateCategoryValidator;
 use Witooh\Cms\Validators\CreateContentValidator;
 use Witooh\Cms\Validators\UpdateCategoryValidator;
 use Witooh\Cms\Validators\UpdateContentValidator;
+use Config;
+use Validators;
 
 class CmsServiceProvider extends ServiceProvider
 {
@@ -48,8 +50,8 @@ class CmsServiceProvider extends ServiceProvider
             function ($app) {
 
                 $validators = $app['validators'];
-                $validators->add('cms.category.create', new CreateCategoryValidator());
-                $validators->add('cms.category.update', new UpdateCategoryValidator());
+                $validators->add('cms.category.create', 'Witooh\Cms\Validators\CreateCategoryValidator');
+                $validators->add('cms.category.update', 'Witooh\Cms\Validators\UpdateCategoryValidator');
 
                 return new CategoryManager($app['Witooh\Cms\Repositories\ICategoryRepository']);
             }
@@ -59,8 +61,8 @@ class CmsServiceProvider extends ServiceProvider
             function ($app) {
 
                 $validators = $app['validators'];
-                $validators->add('cms.content.create', new CreateContentValidator());
-                $validators->add('cms.content.update', new UpdateContentValidator());
+                $validators->add('cms.content.create', 'Witooh\Cms\Validators\CreateContentValidator');
+                $validators->add('cms.content.update', 'Witooh\Cms\Validators\UpdateContentValidator');
 
                 return new ContentManager($app['Witooh\Cms\Repositories\IContentRepository']);
             }

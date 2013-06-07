@@ -14,51 +14,61 @@ class EloquentContentRepository implements IContentRepository {
      */
     public function create(Content $content)
     {
-        // TODO: Implement create() method.
+        return $content->save();
     }
 
     /**
      * Update Content
      *
-     * @param Content $content
-     * @return integer | null
+     * @param integer $id
+     * @param array $attributes
+     * @return bool|void
      */
-    public function update(Content $content)
+    public function update($id, $attributes)
     {
-        // TODO: Implement update() method.
+        return Content::find($id)->update($attributes);
     }
 
     /**
      * Remove Content
      *
      * @param integer $id
-     * @return boolean
+     * @return void
      */
     public function destroy($id)
     {
-        // TODO: Implement destroy() method.
+        return Content::destroy($id);
     }
 
     /**
      * Find Content by Category Name
      *
-     * @param string $category
-     * @return array
+     * @param $category
+     * @param bool $published
+     * @return array | null
      */
-    public function findByCategory($category)
+    public function findByCategory($category, $published = true)
     {
-        // TODO: Implement findByCategory() method.
+        $result = array();
+
+        foreach(Content::where('published', '=', $published)->with('category')->get() as $content){
+            if($content->category->name == $category){
+                $result[] = $content;
+            }
+        }
+
+        return empty($result) ? null : $result;
     }
 
     /**
      * Find Content by ID
      *
      * @param integer $id
-     * @return Content
+     * @return Content | null
      */
     public function findByID($id)
     {
-        // TODO: Implement findByID() method.
+        return Content::find($id);
     }
 
 }

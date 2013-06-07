@@ -10,23 +10,24 @@ interface ICategoryRepository {
      * Create Category
      *
      * @param Category $content
-     * @return integer | null
+     * @return integer | boolean
      */
     public function create(Category $content);
 
     /**
      * Update Category
      *
-     * @param Category $content
-     * @return integer | null
+     * @param integer $id
+     * @param array $attributes
+     * @return boolean
      */
-    public function update(Category $content);
+    public function update($id, $attributes);
 
     /**
      * Remove Category
      *
      * @param integer $id
-     * @return boolean
+     * @return void
      */
     public function destroy($id);
 
@@ -34,7 +35,7 @@ interface ICategoryRepository {
      * Find Category by Name
      *
      * @param string $name
-     * @return array
+     * @return Category
      */
     public function findByName($name);
 

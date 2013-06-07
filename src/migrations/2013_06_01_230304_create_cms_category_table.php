@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCmsContentTable extends Migration {
+class CreateCmsCategoryTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -14,10 +14,12 @@ class CreateCmsContentTable extends Migration {
         Schema::create('cms_category',
             function ($table) {
                 $table->increments('id');
+                $table->integer('user_id');
                 $table->string('name', 100);
                 $table->timestamps();
 
                 $table->index('name');
+                $table->index('user_id');
             }
         );
 	}

@@ -2,7 +2,7 @@
 
 namespace Witooh\Cms;
 
-use Witooh\Validators\IValidator;
+use Event;
 use Witooh\Cms\Repositories\ICategoryRepository;
 use Witooh\Cms\Models\Category;
 
@@ -10,51 +10,48 @@ class CategoryManager
 {
 
     private $categoryRepository;
-    private $handlers = array();
 
     public function __construct(ICategoryRepository $categoryRepository) {
         $this->categoryRepository = $categoryRepository;
     }
 
-    private function fire($event)
-    {
-        if (isset($this->handlers[$event])) {
-            foreach ($this->handlers[$event] as $handler) {
-                $handler();
-            }
-        }
-    }
-
     public function create(Category $category)
     {
-        $this->fire('before.create');
-        $this->fire('after.create');
+        Event::fire('cms.category.before.create', array($category));
+        $result = $this->categoryRepository->create($category);
+        Event::fire('cms.category.after.create', array($category));
+
+        return $result;
     }
 
-    public function update(Category $category)
+    public function update($id, $attributes)
     {
-        $this->fire('before.update');
-        $this->fire('after.update');
+        Event::fire('cms.category.before.update', array($id, $attributes));
+        $result = $this->categoryRepository->update($id, $attributes);
+        Event::fire('cms.category.after.update', array($id, $attributes));
+
+        return $result;
     }
 
     public function destroy($id)
     {
-        $this->fire('before.destroy');
-        $this->fire('after.destroy');
+        Event::fire('cms.category.before.destroy', array($id));
+        $this->categoryRepository->destroy($id);
+        Event::fire('cms.category.after.destroy', array($id));
     }
 
-    public function getCategory($id)
+    public function getCategoryById($id)
     {
+        return $this->categoryRepository->findByID($id);
+    }
 
+    public function getCategoryByName($name)
+    {
+        return $this->getCategoryByName($name);
     }
 
     public function getAll()
     {
 
-    }
-
-    public function listen($event, $handler)
-    {
-        $this->handlers[$event][] = $handler;
     }
 }

@@ -10,44 +10,43 @@ class EloquentCategoryRepository implements ICategoryRepository {
      * Create Category
      *
      * @param Category $content
-     * @return integer | null
+     * @return integer | boolean
      */
     public function create(Category $content)
     {
-        // TODO: Implement create() method.
+        return $content->save() ? $content->id : false;
     }
 
     /**
-     * Update Category
-     *
-     * @param Category $content
-     * @return integer | null
+     * @param integer $id
+     * @param array $attributes
+     * @return bool|mixed
      */
-    public function update(Category $content)
+    public function update($id, $attributes)
     {
-        // TODO: Implement update() method.
+        return Category::find($id)->update($attributes);
     }
 
     /**
      * Remove Category
      *
      * @param integer $id
-     * @return boolean
+     * @return void
      */
     public function destroy($id)
     {
-        // TODO: Implement destroy() method.
+        Category::destroy($id);
     }
 
     /**
      * Find Category by Name
      *
      * @param string $name
-     * @return array
+     * @return Category
      */
     public function findByName($name)
     {
-        // TODO: Implement findByName() method.
+        return Category::where('name', $name)->first();
     }
 
     /**
@@ -58,7 +57,9 @@ class EloquentCategoryRepository implements ICategoryRepository {
      */
     public function findByID($id)
     {
-        // TODO: Implement findByID() method.
+        return Category::find($id);
     }
+
+
 
 }

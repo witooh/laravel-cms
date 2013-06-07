@@ -13,39 +13,41 @@ interface IContentRepository {
      * Create Content
      *
      * @param Content $content
-     * @return integer | null
+     * @return boolean
      */
     public function create(Content $content);
 
     /**
      * Update Content
      *
-     * @param Content $content
-     * @return integer | null
+     * @param integer $id
+     * @param array $attributes
+     * @return boolean
      */
-    public function update(Content $content);
+    public function update($id, $attributes);
 
     /**
      * Remove Content
      *
      * @param integer $id
-     * @return boolean
+     * @return void
      */
     public function destroy($id);
 
     /**
-     * Find Content by Category Name
+     * Find Content by Cetegory Name
      *
-     * @param string $category
-     * @return array
+     * @param $category
+     * @param boolean | null $published
+     * @return array | null
      */
-    public function findByCategory($category);
+    public function findByCategory($category, $published = true);
 
     /**
      * Find Content by ID
      *
      * @param integer $id
-     * @return Content
+     * @return Content | null
      */
     public function findByID($id);
 }
