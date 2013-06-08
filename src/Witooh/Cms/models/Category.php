@@ -7,7 +7,7 @@ use Eloquent;
 class Category extends Eloquent {
     protected $table = 'cms_category';
 
-    protected $fillable = array('name');
+//    protected $fillable = array('name');
 
     protected $guarded = array('id');
 

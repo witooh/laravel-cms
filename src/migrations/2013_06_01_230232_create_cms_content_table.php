@@ -16,14 +16,14 @@ class CreateCmsContentTable extends Migration
             function ($table) {
                 $table->increments('id');
                 $table->integer('category_id');
-                $table->integer('user_id');
+                $table->integer('created_by');
                 $table->string('title', 250);
                 $table->text('content')->nullable();
                 $table->boolean('published');
                 $table->timestamps();
 
                 $table->index('category_id');
-                $table->index('user_id');
+                //$table->index('created_by');
                 $table->index('title');
                 //$table->foreign('category_id')->references('id')->on('cms_category');
             }

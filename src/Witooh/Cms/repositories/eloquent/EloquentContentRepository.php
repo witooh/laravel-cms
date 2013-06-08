@@ -10,11 +10,11 @@ class EloquentContentRepository implements IContentRepository {
      * Create Content
      *
      * @param Content $content
-     * @return integer | null
+     * @return integer | boolean
      */
     public function create(Content $content)
     {
-        return $content->save();
+        return $content->save() ? $content->id : false;
     }
 
     /**

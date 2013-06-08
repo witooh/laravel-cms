@@ -14,12 +14,12 @@ class CreateCmsCategoryTable extends Migration {
         Schema::create('cms_category',
             function ($table) {
                 $table->increments('id');
-                $table->integer('user_id');
+                $table->integer('created_by');
                 $table->string('name', 100);
                 $table->timestamps();
 
                 $table->index('name');
-                $table->index('user_id');
+                //$table->index('created_by');
             }
         );
 	}

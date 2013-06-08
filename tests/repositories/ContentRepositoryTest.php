@@ -30,7 +30,7 @@ class ContentRepositoryTest extends TestCase {
         $data = array(
             'title'=>'test',
             'content'=>'description',
-            'user_id'=>1,
+            'created_by'=>1,
             'published'=>true,
         );
         $content = new Content($data);
@@ -70,6 +70,17 @@ class ContentRepositoryTest extends TestCase {
         $this->assertInstanceOf('Witooh\Cms\Models\Content', $content);
     }
 
+    public function testFindByIDNotFound(){
+        //Arrange
+        $id = -1;
+
+        //Act
+        $content = $this->contentRepository->findByID($id);
+
+        //Assert
+        $this->assertNull($content);
+    }
+
     public function testFindByCategory(){
         //Arrange
         $category = 'Category 1';
@@ -78,8 +89,19 @@ class ContentRepositoryTest extends TestCase {
         $content = $this->contentRepository->findByCategory($category, true);
 
         //Assert
-//        $this->assertInstanceOf('Witooh\Cms\Models\Content', $content[0]);
         $this->assertGreaterThan(0, count($content));
+    }
+
+    public function testFindByCategoryNotFound(){
+        //Arrange
+        $category = 'None';
+
+        //Act
+        $content = $this->contentRepository->findByCategory($category, true);
+
+        //Assert
+        $this->assertNull($content);
+
     }
 
     public function testDestroy(){

@@ -5,6 +5,8 @@ namespace Witooh\Cms;
 use Event;
 use Witooh\Cms\Repositories\ICategoryRepository;
 use Witooh\Cms\Models\Category;
+use Validators;
+use JsonResponse;
 
 class CategoryManager
 {
@@ -18,7 +20,15 @@ class CategoryManager
     public function create(Category $category)
     {
         Event::fire('cms.category.before.create', array($category));
+
+        $validator = Validators::get('cms.category.create');
+        $validator->setAttributes($category->toArray());
+        if($validator->fails()){
+            JsonResponse::validation($validator->getErrors(), $category->toArray());
+        }
+
         $result = $this->categoryRepository->create($category);
+
         Event::fire('cms.category.after.create', array($category));
 
         return $result;
@@ -27,7 +37,15 @@ class CategoryManager
     public function update($id, $attributes)
     {
         Event::fire('cms.category.before.update', array($id, $attributes));
+
+        $validator = Validators::get('cms.category.update');
+        $validator->setAttributes($attributes);
+        if($validator->fails()){
+            JsonResponse::validation($validator->getErrors(), $attributes);
+        }
+
         $result = $this->categoryRepository->update($id, $attributes);
+
         Event::fire('cms.category.after.update', array($id, $attributes));
 
         return $result;

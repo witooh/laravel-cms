@@ -29,7 +29,7 @@ class CategoryRepositoryTest extends TestCase {
         //Arrange
         $data = array(
             'name'=>'Test',
-            'user_id'=>1,
+            'created_by'=>1,
         );
         $category = new Category($data);
 
@@ -69,6 +69,17 @@ class CategoryRepositoryTest extends TestCase {
         $this->assertInstanceOf('Witooh\Cms\Models\Category', $category);
     }
 
+    public function testFindByIDNotFound(){
+        //Arrange
+        $id = -1;
+
+        //Act
+        $category = $this->categoryRepository->findByID($id);
+
+        //Assert
+        $this->assertNull($category);
+    }
+
     public function testFindByName(){
         //Arrange
         $category_name = 'Category 2';
@@ -78,6 +89,17 @@ class CategoryRepositoryTest extends TestCase {
 
         //Assert
         $this->assertInstanceOf('Witooh\Cms\Models\Category', $category);
+    }
+
+    public function testFindByNameNotFound(){
+        //Arrange
+        $category_name = 'Category @#@!#';
+
+        //Act
+        $category = $this->categoryRepository->findByName($category_name);
+
+        //Assert
+        $this->assertNull($category);
     }
 
     public function testDestroy(){
